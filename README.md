@@ -56,7 +56,7 @@ curl -o install_ollama.sh https://ollama.com/install.sh
 bash install_ollama.sh
 ```
 
-## Why You Need Ollama
+### Why You Need Ollama
 part of the code looks like this:
 
 ```bash
@@ -64,7 +64,7 @@ llm = Ollama(model="llama3.2:1b", request_timeout=120.0)
 ```
 - This indicates that the application is set up to use an Ollama model for generating responses based on queries. Without installing Ollama, this part of the code will not function, leading to errors when you try to run it.
 
-# Run Ollama in a Docker Container
+### Run Ollama in a Docker Container
 
 - If you want to run Ollama using Docker, you can do so with the following command. This will pull the latest Ollama image and start it in a container
 
