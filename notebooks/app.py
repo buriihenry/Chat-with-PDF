@@ -92,4 +92,64 @@ def run_workflow(query):
 
     deduplicated_news = research_analysis_response.messages[-1]["content"]
     
-    # Step 3: Edit and Format the Analyzed Results
+    # Step 3: Edit and Publish the analysed results with streaming
+    return client.run(
+        agent=writer_agent,
+        messages=[{"role": "user", "content": deduplicated_news}],
+        stream=True
+    )
+
+# Streamlit app
+def main():
+    st.set_page_config(page_title="Internet Research Assistant", page_icon="")
+    st.title("Internet Research Assistant") 
+
+    #Initialize Session state for query and article
+    if 'query'not in st.session_state:
+        st.session_state.query = ""
+    if 'article' not in st.session_state:
+        st.session_state.article = ""
+    # Create two columns for the input and clear button
+    col1, col2 = st.columns([3, 1])
+
+    # Search Query input
+    with col1:
+        query = st.text_input("Enter your search query:", value=st.session_state.query)
+
+    # Clear button
+    with col2:
+        if st.button("Clear"):
+            st.session_state.query = ""
+            st.session_state.article = ""
+            st.rerun()
+
+    # Generate article only when is clicked
+    if st.button("Generate Article") and query:
+        with st.spinner("Generating article ..."):
+            #Get Streaming Response
+            streaming_response = run_workflow(query)
+            st.session_state.query = query 
+
+            #Placeholder for the streaming text
+            message_placeholder = st.empty()
+            full_response = ""
+
+            # Stream the response
+            for chunk in streaming_response:
+                #Skip the intial delimiter
+                if isinstance(chunk, dict) and 'delim' in chunk:
+                    continue
+
+                # Extract only the content from each chunk
+                if isinstance(chunk, dict) and 'content' in chunk:
+                    content = chunk['content']
+                    full_response +=content
+                    message_placeholder.markdown(full_response + "|")
+    
+    # Display the article if it exists in the session state  
+    if st.session_state.article:
+        st.markdown(st.session_state.article)
+
+if __name__ == "__main__":
+    main()
+
