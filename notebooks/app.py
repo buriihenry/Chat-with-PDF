@@ -19,8 +19,6 @@ ddgs = DDGS()
 # Function to search the web using DuckDuckGo
 def search_web(query):
     print(f"Searching the web for {query}...")
-    
-    # DuckDuckGo search
     current_date = datetime.now().strftime("%Y-%m")
     results = ddgs.text(f"{query} {current_date}", max_results=10)
     if results:
@@ -30,12 +28,11 @@ def search_web(query):
         return news_results.strip()
     else:
         return f"Could not find news results for {query}."
-    
 
 # Define the Web Search Agent
 web_search_agent = Agent(
     name="Web Search Assistant",
-    instructions="Your role is to gather latest news articles on specified topics using DuckDuckGo's search capabilities.",
+    instructions="Your role is to gather the latest news articles on specified topics using DuckDuckGo's search capabilities.",
     functions=[search_web],
     model=MODEL
 )
@@ -92,7 +89,7 @@ def run_workflow(query):
 
     deduplicated_news = research_analysis_response.messages[-1]["content"]
     
-    # Step 3: Edit and Publish the analysed results with streaming
+    # Step 3: Edit and Format the Analyzed Results
     return client.run(
         agent=writer_agent,
         messages=[{"role": "user", "content": deduplicated_news}],
@@ -101,15 +98,16 @@ def run_workflow(query):
 
 # Streamlit app
 def main():
-    st.set_page_config(page_title="Internet Research Assistant", page_icon="")
-    st.title("Internet Research Assistant") 
+    st.set_page_config(page_title="Internet Research Assistant 🔎", page_icon="🔎")
+    st.title("Internet Research Assistant")
 
-    #Initialize Session state for query and article
-    if 'query'not in st.session_state:
+    # Initialize session state
+    if 'query' not in st.session_state:
         st.session_state.query = ""
     if 'article' not in st.session_state:
         st.session_state.article = ""
-    # Create two columns for the input and clear button
+
+    # Create two columns for input and clear button
     col1, col2 = st.columns([3, 1])
 
     # Search Query input
@@ -123,33 +121,31 @@ def main():
             st.session_state.article = ""
             st.rerun()
 
-    # Generate article only when is clicked
+    # Generate article button
     if st.button("Generate Article") and query:
-        with st.spinner("Generating article ..."):
-            #Get Streaming Response
+        with st.spinner("Generating article..."):
+            # Get streaming response
             streaming_response = run_workflow(query)
-            st.session_state.query = query 
+            st.session_state.query = query
 
-            #Placeholder for the streaming text
+            # Placeholder for the streaming text
             message_placeholder = st.empty()
             full_response = ""
 
-            # Stream the response
+            # Stream the response and save to session state
             for chunk in streaming_response:
-                #Skip the intial delimiter
-                if isinstance(chunk, dict) and 'delim' in chunk:
-                    continue
-
-                # Extract only the content from each chunk
-                if isinstance(chunk, dict) and 'content' in chunk:
+                # Extract content from the chunk
+                if isinstance(chunk, dict) and chunk.get('content'):
                     content = chunk['content']
-                    full_response +=content
-                    message_placeholder.markdown(full_response + "|")
-    
-    # Display the article if it exists in the session state  
+                    full_response += content
+                    message_placeholder.markdown(full_response + "▌")
+
+            # Save the final article
+            st.session_state.article = full_response.strip()
+
+    # Display the article if it exists
     if st.session_state.article:
         st.markdown(st.session_state.article)
 
 if __name__ == "__main__":
     main()
-
