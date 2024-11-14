@@ -1,7 +1,6 @@
 
 # Chat with documents!
 
-
 Managing and interacting with large documents or databases can be overwhelming, especially when trying to extract specific information quickly or when working with multiple documents. Traditional search methods often fall short when it comes to context-aware, nuanced information retrieval. The challenge is compounded when users need to analyze documents from various sources, potentially leading to confusion and time-consuming processes.
 
 The Chat with Documents AI application provides an intuitive, conversational interface that allows users to interact with documents and extract information seamlessly. By using advanced document retrieval techniques and AI-powered responses, the assistant can help users navigate complex data, answer specific queries, and even summarize content from large documents.
@@ -22,7 +21,7 @@ The main use cases include:
 
 The dataset for this application consists of various documents, including text files and PDFs. These documents cover a wide range of topics, and the content varies from technical manuals to research papers. The dataset enables the application to demonstrate the power of conversational AI in document management.
 
-You can find the data in [`data/data.csv`](data/data.csv).
+You can find the data in [`document_rag/docs`](document_rag/docs).
 
 ## Technologies
 
