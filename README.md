@@ -19,7 +19,7 @@ The main use cases include:
 
 ## Dataset
 
-The dataset for this application consists of various documents, including text files and PDFs. These documents cover a wide range of topics, and the content varies from technical manuals to research papers. The dataset enables the application to demonstrate the power of conversational AI in document management.
+The dataset for this applicathttps://x.com/homeion consists of various documents, including text files and PDFs. These documents cover a wide range of topics, and the content varies from technical manuals to research papers. The dataset enables the application to demonstrate the power of conversational AI in document management.
 
 You can find the data in [`document_rag/docs`](document_rag/docs).
 
