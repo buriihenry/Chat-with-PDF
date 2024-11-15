@@ -176,4 +176,4 @@ This project is licensed under the MIT License.
 
 ---
 
-Thank you for checking out **Enhanced Chat with Documents**! We hope you enjoy using it. 😊
+Thank you for checking out **Chat with Documents**! We hope you enjoy using it. 😊
