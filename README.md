@@ -39,7 +39,7 @@ Before running the application, make sure you have the following software and li
 Clone this repository to your local machine using:
 
 ```bash
-git clone https://github.com/buriihenry/enhanced-chat-with-docs.git
+git clone https://github.com/buriihenry/Chat-with-PDF.git
 ```
 
 ### Step 2: Create a Virtual Environment
