@@ -1,59 +1,125 @@
 
-# Chat with documents!
+# Chat with Documents 🧑‍💻🤖
 
-Managing and interacting with large documents or databases can be overwhelming, especially when trying to extract specific information quickly or when working with multiple documents. Traditional search methods often fall short when it comes to context-aware, nuanced information retrieval. The challenge is compounded when users need to analyze documents from various sources, potentially leading to confusion and time-consuming processes.
+**Chat with Documents** allows you to upload a PDF document and ask questions about its content. The application uses Llama-3.2 for LLM and HuggingFace embeddings for document indexing and querying. You can chat with the document and get real-time responses.
 
-The Chat with Documents AI application provides an intuitive, conversational interface that allows users to interact with documents and extract information seamlessly. By using advanced document retrieval techniques and AI-powered responses, the assistant can help users navigate complex data, answer specific queries, and even summarize content from large documents.
+## Features:
+- Upload a PDF document and index it.
+- Ask questions related to the content of the uploaded document.
+- Clear the chat history.
+- Download chat history as a text file.
+- Display document analytics like word frequency (powered by Plotly).
+- Powered by **Llama-3.2** and **HuggingFace embeddings**.
 
-## Project overview
+## Requirements
 
-The Chat with Documents AI is a Retrieval-Augmented Generation (RAG) application designed to enhance document management and interaction. It provides a chatbot interface that allows users to ask questions and retrieve relevant information from documents, all powered by AI
+Before running the application, make sure you have the following software and libraries installed:
 
-The main use cases include:
-
-1. Interactive Document Queries: Users can ask questions related to the document’s content and receive context-aware, precise answers.
-2. Document Summarization: Generate summaries of large documents, highlighting key points.
-3. Document Retrieval: Search and retrieve specific sections or details from various documents.
-4. Contextual Q&A: Answer user questions in real-time, understanding the context of the documents being queried.
-5. Document Management: Manage and interact with multiple documents within a single platform.
-
-## Dataset
-
-The dataset for this applicathttps://x.com/homeion consists of various documents, including text files and PDFs. These documents cover a wide range of topics, and the content varies from technical manuals to research papers. The dataset enables the application to demonstrate the power of conversational AI in document management.
-
-You can find the data in [`document_rag/docs`](document_rag/docs).
-
-## Technologies
-
-- Python 3.12.7
-- Docker for containerization
-- Hugging Face Transformers for advanced NLP models
-- Streaamlit for the web interface
-- Ollama/llama3.2:1b as open source LLMs
+- Python 3.8+
+- Streamlit (for web interface)
+- Plotly (for analytics dashboard)
+- Llama-3.2 and HuggingFace (for querying and document embedding)
+- Qdrant (for vector storage)
 - OpenAI API for language model integration
 
+### Libraries:
+- `llama_index`
+- `streamlit`
+- `plotly`
+- `qdrant-client`
+- `huggingface_hub`
+- `Pillow`
+- `uuid`
+- `base64`
 
-## Running the application
+## Installation Instructions
 
-- Ensure you have Docker installed on your system.
-- Clone this repository to your local machine.
-- Navigate to the project directory in your terminal.
-- install all necessary libaries 
+### Step 1: Clone the Repository
 
-``` bash
-pip install nest-asyncio qdrant-client llama-index huggingface-hub sentence-transformers
-```
-- install Ollama using the following command:
-
-```bash
-sudo snap install ollama
-```
-or 
+Clone this repository to your local machine using:
 
 ```bash
-curl -o install_ollama.sh https://ollama.com/install.sh
-bash install_ollama.sh
+git clone https://github.com/buriihenry/enhanced-chat-with-docs.git
 ```
+
+### Step 2: Create a Virtual Environment
+
+It is highly recommended to use a virtual environment to manage dependencies. Run the following commands:
+
+#### On Linux/Mac:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+#### On Windows:
+```bash
+python -m venv venv
+.env\Scriptsctivate
+```
+
+### Step 3: Install Dependencies
+
+Install the required libraries using `pip`:
+
+```bash
+pip install -r requirements.txt
+```
+
+If you don't have a `requirements.txt` file yet, you can create one by manually adding the following dependencies:
+
+```
+llama_index
+streamlit
+plotly
+qdrant-client
+huggingface_hub
+Pillow
+uuid
+base64
+```
+
+You can also install individual packages with the following command:
+
+```bash
+pip install streamlit plotly llama_index qdrant-client huggingface_hub Pillow
+```
+
+### Step 4: Install Ollama Model
+
+You will need the Ollama model (Llama-3.2:1b) for querying. Please make sure to install it. You can find instructions on the [Ollama website](https://ollama.com) if necessary.
+
+### Step 5: Install Qdrant
+
+For local testing, you can run a Qdrant instance using Docker:
+
+```bash
+docker run -p 6333:6333 qdrant/qdrant
+```
+
+Alternatively, you can install Qdrant locally (without Docker) using pip:
+
+```bash
+pip install qdrant-client
+```
+
+### Step 6: Set Up Your Environment Variables
+
+Ensure that your environment has access to Qdrant running on `localhost:6333` and any HuggingFace API keys if required.
+
+## Running the Application Locally
+
+Once you have installed all dependencies and set up the environment, you can run the application locally with Streamlit:
+
+1. Make sure you are in the project directory.
+2. Run the following command to start the Streamlit app:
+
+```bash
+streamlit run app.py
+```
+
+This will launch the application in your web browser at `http://localhost:8501`.
+
 
 ### Why You Need Ollama
 part of the code looks like this:
@@ -76,4 +142,38 @@ docker run -d --name ollama -p 11434:11434 -v ollama_volume:/root/.ollama ollama
 ollama pull llama3.2:1b
 ```
 
-# New README update coming 
+## Usage
+
+Once the app is running, you can:
+
+1. **Upload a PDF document** via the file upload option in the sidebar.
+2. **Chat with the document**: Type a question in the input box, and the application will respond based on the content of the uploaded document.
+3. **View Analytics**: The app will show word frequency analysis for the document you uploaded.
+4. **Clear chat history**: Press the “Clear Chat” button to reset the conversation.
+5. **Download chat history**: Download the entire chat history in `.txt` format for reference.
+
+### Example:
+1. Upload a document, such as a research paper or technical manual.
+2. Ask specific questions like:
+   - "What is the main topic of this document?"
+   - "Can you explain the key findings?"
+   - "How does the author define machine learning?"
+
+The model will fetch the relevant context and provide answers.
+
+## Contributing
+
+Feel free to open issues or submit pull requests if you would like to contribute to the project. All contributions are welcome!
+
+### To Do:
+- Improve document handling and indexing performance.
+- Add support for multiple document types (Word, Text, etc.).
+- Add advanced NLP features like summarization and entity recognition.
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+Thank you for checking out **Enhanced Chat with Documents**! We hope you enjoy using it. 😊
